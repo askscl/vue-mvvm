@@ -79,3 +79,5 @@ function observe(data) {
     if (!data || typeof data !== 'object') return;
     return new Observe(data);
 }
+
+//test上传
