@@ -80,4 +80,29 @@ function observe(data) {
     return new Observe(data);
 }
 
-//test上传
+//发布订阅模式 订阅和发布 如[fn1, fn2, fn3]
+function Dep(){
+    this.subs = [];
+}
+
+Dep.prototype = {
+    addSub(sub){
+        this.subs.push(sub);
+    },
+    notify() {
+        this.subs.forEach(sub => sub.update());
+    }
+};
+//监听函数
+function Watcher(fn) {
+    this.fn = fn;
+}
+Watcher.prototype.update = function() {
+    this.fn();
+};
+
+let watcher = new Watcher(() => console.log(111));
+let dep = new Dep();
+dep.addSub(watcher);
+dep.addSub(watcher);
+dep.notify();
