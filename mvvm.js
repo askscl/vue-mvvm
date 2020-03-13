@@ -106,3 +106,28 @@ let dep = new Dep();
 dep.addSub(watcher);
 dep.addSub(watcher);
 dep.notify();
+
+//数据更新视图--未理解
+function replace(frag) {
+    node.textContent = txt.replace(reg, val).trim();
+
+    new Watcher(vm, RegExp.$1, newVal => {
+        node.textContent = txt.replace(reg, newVal).trim();
+    });
+}
+
+function Watcher(vm, exp, fn) {
+    this.fn = fn;
+    this.vm = vm;
+    this.exp = exp;
+
+    Dep.target = this;
+    let arr = exp.split('.');
+    let val = vm;
+    arr.forEach(key => {
+        val = val[key];
+    });
+    Dep.target = null;
+}
+
+
